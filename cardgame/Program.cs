@@ -1,6 +1,20 @@
-﻿Card card = new Card();
+﻿Card c = new Card();
+Card cTwo = new Card();
+Card dealerC = new Card();
+Card dealerCtwo = new Card();
 Random rnd = new Random();
-card.value = rnd.Next(2, 10);
+for (int i = 0; i < 3; i++)
+{
+    
+}
+c.value = rnd.Next(2, 10);
+c.type = c.types[rnd.Next(4)];
+cTwo.value = rnd.Next(2, 10);
+cTwo.type = c.types[rnd.Next(4)];
+dealerC.value = rnd.Next(2, 10);
+dealerC.type = c.types[rnd.Next(4)];
+dealerCtwo.value = rnd.Next(2, 10);
+dealerCtwo.type = c.types[rnd.Next(4)];
 
 intro();
 
@@ -20,11 +34,15 @@ void intro() {
 
 void blackjack() {
     Console.Clear();
-    Console.WriteLine("Welcome to Blackjack!");
-    Console.WriteLine(card.type);
-    Console.WriteLine(card.value);
+    Console.WriteLine("Welcome to Blackjack!\n");
+    //Console.WriteLine("Please place your bets");
+    Console.WriteLine("Generating cards...\nYour cards are:");
+    Console.WriteLine(c.type + " " + c.value);
+    Console.WriteLine(cTwo.type + " " + cTwo.value);
+    Console.WriteLine("\nThe dealer cards are:");
+    Console.WriteLine(dealerC.type + " " + dealerCtwo.value);
+    Console.WriteLine("Hidden  Hidden");
+
 }
-
-
 
 Console.ReadLine();
