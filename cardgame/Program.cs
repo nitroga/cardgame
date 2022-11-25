@@ -1,4 +1,5 @@
-﻿Random rnd = new Random();
+﻿int cardsValue;
+Random rnd = new Random();
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
 
@@ -33,11 +34,9 @@ void dealingBlackjack() {
     Console.WriteLine("Generating cards...\nYour cards are:");
     Console.WriteLine(cards[0].type + " " + cards[0].value);
     Console.WriteLine(cards[1].type + " " + cards[1].value);
-    Console.WriteLine($"You have {cards[0].value + cards[1].value}");
     Console.WriteLine("\nThe dealer cards are:");
     Console.WriteLine(dealerCards[0].type + " " + dealerCards[0].value);
     Console.WriteLine("Hidden  Hidden");
-    Console.WriteLine($"The dealer has {dealerCards[0].value}");
     if (cards[0].value + cards[1].value == 21) {
         Console.WriteLine("You got a blackjack!");
     }
@@ -48,6 +47,14 @@ void dealingBlackjack() {
 }
 
 void blackjack() {
+    cardsValue = 0;
+    for (int i = 0; i < cards.Count; i++)
+    {
+        Console.WriteLine(cards[i].value);
+        cardsValue += cards[i].value;
+    }
+    Console.WriteLine($"You currently have {cardsValue}");
+    Console.WriteLine($"The dealer has {dealerCards[0].value}");
     Console.WriteLine("\nWhat would you like to do?\nHit\nStand\nDouble Down");
     string choice = Console.ReadLine().ToLower();
     if (choice == "hit") {
@@ -61,7 +68,9 @@ void blackjack() {
 
 void blackjackHit () {
     Console.Clear();
-
+    cards.Add(new Card());
+    cards[cards.Count - 1].value = rnd.Next(2, 10);
+    blackjack();
 }
 
 void blackjackStand () {
