@@ -1,4 +1,5 @@
-﻿int cardsValue;
+﻿int cardsValue = 0;
+int dealerValue = 0;
 Random rnd = new Random();
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
@@ -14,7 +15,7 @@ for (int i = 0; i < cards.Count; i++)
 intro();
 
 void intro() {
-    //Console.Clear();
+    Console.Clear();
     Console.WriteLine("What cardgame would you like to play?");
     Console.WriteLine("Current choices\n<------|------>\nBlackjack\n\nPlease choose what you would like to play:");
     string choice = Console.ReadLine().ToLower();
@@ -30,7 +31,6 @@ void intro() {
 void dealingBlackjack() {
     Console.Clear();
     Console.WriteLine("Welcome to Blackjack!\n");
-    //Console.WriteLine("Please place your bets");
     Console.WriteLine("Generating cards...\nYour cards are:");
     Console.WriteLine(cards[0].type + " " + cards[0].value);
     Console.WriteLine(cards[1].type + " " + cards[1].value);
@@ -50,12 +50,17 @@ void blackjack() {
     cardsValue = 0;
     for (int i = 0; i < cards.Count; i++)
     {
-        Console.WriteLine(cards[i].value);
         cardsValue += cards[i].value;
     }
-    Console.WriteLine($"You currently have {cardsValue}");
+    if (cardsValue == 21) {
+        Console.WriteLine("You got 21");
+    }
+    else if (cardsValue >= 21) {
+        Console.WriteLine("You have gone bust!");
+    }
+    Console.WriteLine($"\nYou currently have {cardsValue}");
     Console.WriteLine($"The dealer has {dealerCards[0].value}");
-    Console.WriteLine("\nWhat would you like to do?\nHit\nStand\nDouble Down");
+    Console.WriteLine("\nWhat would you like to do?\nHit\nStand");
     string choice = Console.ReadLine().ToLower();
     if (choice == "hit") {
         blackjackHit();
@@ -66,16 +71,43 @@ void blackjack() {
     }
 }
 
-void blackjackHit () {
+void blackjackHit() {
     Console.Clear();
     cards.Add(new Card());
     cards[cards.Count - 1].value = rnd.Next(2, 10);
     blackjack();
 }
 
-void blackjackStand () {
+void blackjackStand() {
     Console.Clear();
+    dealerValue = 0;
+    for (int i = 0; i < dealerCards.Count; i++)
+    {
+        dealerValue += dealerCards[i].value;
+    }
+    if (dealerValue < 17) {
+        dealerCards.Add(new Card());
+        dealerCards[dealerCards.Count - 1].value = rnd.Next(2, 10);
+        blackjackStand();
+    }
+    else {
+        blackjackEnd();
+    }
 }
 
-
+void blackjackEnd() {
+    Console.Clear();
+    Console.WriteLine("The game is now over!");
+    cardsValue = dealerValue = 0;
+    for (int i = 0; i < cards.Count; i++)
+    {
+        cardsValue += cards[i].value;
+    }
+    for (int i = 0; i < dealerCards.Count; i++)
+    {
+        dealerValue += dealerCards[i].value;
+    }
+    Console.WriteLine(cardsValue);
+    Console.WriteLine(dealerValue);
+}
 Console.ReadLine();
