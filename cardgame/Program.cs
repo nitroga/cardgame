@@ -28,12 +28,6 @@ void dealingBlackjack() {
     Console.WriteLine("\nThe dealer cards are:");
     Console.WriteLine(dealerCards[0].type + " " + dealerCards[0].value);
     Console.WriteLine("Hidden  Hidden");
-    if (cards[0].value + cards[1].value == 21) {
-        Console.WriteLine("You got a blackjack!");
-    }
-    if (dealerCards[0].value + dealerCards[1].value == 21) {
-        Console.WriteLine("The dealer got a blackjack!");
-    }
     blackjack();
 }
 
@@ -43,12 +37,7 @@ void blackjack() {
     {
         cardsValue += cards[i].value;
     }
-    if (cardsValue == 21) {
-        Console.WriteLine("You got 21");
-        blackjackStand();
-    }
-    else if (cardsValue >= 21) {
-        Console.WriteLine("You have gone bust!");
+    if (cardsValue >= 21 || dealerValue >= 21) {
         blackjackStand();
     }
     else {
@@ -102,7 +91,7 @@ void blackjackEnd() {
     }
     Console.WriteLine($"You have: {cardsValue}");
     Console.WriteLine($"The dealer has: {dealerValue}\n");
-    if (cardsValue > 21 || dealerValue > 21 || cardsValue == dealerValue) {
+    if (cardsValue > 21 && dealerValue > 21 || cardsValue == dealerValue) {
         Console.WriteLine("Noone won");
     }
     else if (cardsValue > dealerValue || cardsValue < 22 && dealerValue > 21) {
@@ -113,6 +102,18 @@ void blackjackEnd() {
     }
     else {
         Console.WriteLine("Error");
+    }
+    Console.WriteLine("Type 'print' to check the value of all cards");
+    string action = Console.ReadLine().ToLower();
+    if (action == "print") {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            Console.WriteLine(cards[i].value);
+        }
+        for (int i = 0; i < dealerCards.Count; i++)
+        {
+            Console.WriteLine(dealerCards[i].value);
+        }
     }
 }
 Console.ReadLine();
