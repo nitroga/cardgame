@@ -52,7 +52,7 @@ void blackjack() {
         blackjackStand();
     }
     else {
-        Console.WriteLine($"\nYou currently have {cardsValue}");
+        Console.WriteLine($"You currently have {cardsValue}");
         Console.WriteLine($"The dealer has {dealerCards[0].value}");
         Console.WriteLine("\nWhat would you like to do?\nHit\nStand");
         string choice = Console.ReadLine().ToLower();
@@ -102,14 +102,17 @@ void blackjackEnd() {
     }
     Console.WriteLine($"You have: {cardsValue}");
     Console.WriteLine($"The dealer has: {dealerValue}\n");
-    if (cardsValue == dealerValue) {
+    if (cardsValue > 21 || dealerValue > 21 || cardsValue == dealerValue) {
         Console.WriteLine("Noone won");
     }
-    else if (cardsValue > dealerValue) {
+    else if (cardsValue > dealerValue || cardsValue < 22 && dealerValue > 21) {
         Console.WriteLine("You won");
     }
+    else if (cardsValue < dealerValue || cardsValue > 21 && dealerValue < 22) {
+        Console.WriteLine("Dealer won");
+    }
     else {
-        Console.WriteLine("You lost");
+        Console.WriteLine("Error");
     }
 }
 Console.ReadLine();

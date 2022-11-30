@@ -6,7 +6,13 @@ public class Card
     public string type { get; set; }
 
     public Card() {
-        value = rnd.Next(2, 10);
+        value = rnd.Next(1, 13);
+        if (value >= 11) {
+            value = 10;
+        }
+        else if (value == 1) {
+            value = 11;
+        }
         type = types[rnd.Next(4)];
     }
 }
