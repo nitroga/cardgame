@@ -1,16 +1,7 @@
 ﻿int cardsValue = 0;
 int dealerValue = 0;
-Random rnd = new Random();
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
-
-for (int i = 0; i < cards.Count; i++)
-{
-    cards[i].type = cards[i].types[rnd.Next(4)];
-    cards[i].value = rnd.Next(2, 10);
-    dealerCards[i].type = dealerCards[i].types[rnd.Next(4)];
-    dealerCards[i].value = rnd.Next(2, 10);
-}
 
 intro();
 
@@ -78,7 +69,6 @@ void blackjack() {
 void blackjackHit() {
     Console.Clear();
     cards.Add(new Card());
-    cards[cards.Count - 1].value = rnd.Next(2, 10);
     blackjack();
 }
 
@@ -91,7 +81,6 @@ void blackjackStand() {
     }
     if (dealerValue < 17) {
         dealerCards.Add(new Card());
-        dealerCards[dealerCards.Count - 1].value = rnd.Next(2, 10);
         blackjackStand();
     }
     else {
@@ -112,6 +101,15 @@ void blackjackEnd() {
         dealerValue += dealerCards[i].value;
     }
     Console.WriteLine($"You have: {cardsValue}");
-    Console.WriteLine($"The dealer has: {dealerValue}");
+    Console.WriteLine($"The dealer has: {dealerValue}\n");
+    if (cardsValue == dealerValue) {
+        Console.WriteLine("Noone won");
+    }
+    else if (cardsValue > dealerValue) {
+        Console.WriteLine("You won");
+    }
+    else {
+        Console.WriteLine("You lost");
+    }
 }
 Console.ReadLine();
