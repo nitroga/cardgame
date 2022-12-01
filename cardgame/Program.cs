@@ -33,9 +33,14 @@ void dealingBlackjack() {
 
 void blackjack() {
     cardsValue = 0;
+    dealerValue = 0;
     for (int i = 0; i < cards.Count; i++)
     {
         cardsValue += cards[i].value;
+    }
+    for (int i = 0; i < dealerCards.Count; i++)
+    {
+        dealerValue += dealerCards[i].value;
     }
     if (cardsValue >= 21 || dealerValue >= 21) {
         blackjackStand();
