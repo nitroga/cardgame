@@ -103,10 +103,10 @@ void blackjackEnd() {
     if (cardsValue > 21 && dealerValue > 21 || cardsValue == dealerValue) {
         Console.WriteLine("Noone won");
     }
-    else if (cardsValue > dealerValue || cardsValue < 22 && dealerValue > 21) {
+    else if (cardsValue > dealerValue && cardsValue < 22 || dealerValue > 21) {
         Console.WriteLine("You won");
     }
-    else if (cardsValue < dealerValue || cardsValue > 21 && dealerValue < 22) {
+    else if (cardsValue < dealerValue && cardsValue > 21 || dealerValue < 22) {
         Console.WriteLine("Dealer won");
     }
     else {
