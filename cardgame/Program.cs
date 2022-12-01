@@ -40,6 +40,15 @@ void blackjack() {
     if (cardsValue >= 21 || dealerValue >= 21) {
         blackjackStand();
     }
+    else if (cardsValue > 21) {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].value == 11) {
+                cards[i].value = 1;
+            }
+        }
+        blackjack();
+    }
     else {
         Console.WriteLine($"You currently have {cardsValue}");
         Console.WriteLine($"The dealer has {dealerCards[0].value}");
