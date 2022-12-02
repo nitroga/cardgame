@@ -1,9 +1,38 @@
-﻿int cardsValue = 0;
+﻿using System.Text.Json;
+
+int cardsValue = 0;
 int dealerValue = 0;
+string fileName = "Players.json";
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
+Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText(fileName));
 
-intro();
+start();
+
+void start() {
+    Console.Clear();
+    Console.WriteLine("Welcome!\n");
+    Console.WriteLine("Please input name");
+    string nameChoice = Console.ReadLine();
+    if (player.name == nameChoice) {
+        Console.WriteLine("Character already exists\nWould you like to overwrite it?");
+        if (Console.ReadLine().ToLower() != "yes") {
+            start();
+        }
+        else {
+            player.chips = 5000;
+            string playerString = JsonSerializer.Serialize<Player>(player);
+            File.WriteAllText(fileName, playerString);
+            intro();
+        }
+    }
+    else {
+        player.chips = 5000;
+        string playerString = JsonSerializer.Serialize<Player>(player);
+        File.WriteAllText(fileName, playerString);
+        intro();
+    }
+}
 
 void intro() {
     Console.Clear();
