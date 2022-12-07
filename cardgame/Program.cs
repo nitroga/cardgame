@@ -21,17 +21,16 @@ void start() {
         }
         else {
             player.chips = 5000;
-            string playerString = JsonSerializer.Serialize<Player>(player);
-            File.WriteAllText(fileName, playerString);
             intro();
         }
     }
     else {
+        player.name = nameChoice;
         player.chips = 5000;
-        string playerString = JsonSerializer.Serialize<Player>(player);
-        File.WriteAllText(fileName, playerString);
-        intro();
     }
+    string playerString = JsonSerializer.Serialize<Player>(player);
+    File.WriteAllText(fileName, playerString);
+    intro();
 }
 
 void intro() {
