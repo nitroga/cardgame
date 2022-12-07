@@ -2,9 +2,12 @@
 
 int cardsValue = 0;
 int dealerValue = 0;
+int betChoice = 1;
+bool betFail = false;
 string fileName = "Players.json";
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
+List<int> bets = new List<int>() {100, 1000};
 Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText(fileName));
 
 start();
@@ -49,7 +52,26 @@ void intro() {
 
 void dealingBlackjack() {
     Console.Clear();
-    Console.WriteLine("Welcome to Blackjack!\n");
+    if (betFail) {
+        Console.WriteLine("Input a valid bet");
+        betFail = false;
+    }
+    Console.WriteLine($"Welcome to Blackjack!\nYou have {player.chips} chips\n");
+    Console.WriteLine("Please place your bets");
+    bool parse = int.TryParse(Console.ReadLine(), out betChoice);
+    if (!parse) {
+        betFail = true;
+        dealingBlackjack();
+    }
+    else {
+        if (betChoice == 0 || betChoice >= player.chips) {
+            betFail = true;
+            dealingBlackjack();
+        }
+        else {
+            player.chips-=betChoice;
+        }
+    }
     Console.WriteLine("Generating cards...\nYour cards are:");
     Console.WriteLine(cards[0].type + " " + cards[0].value);
     Console.WriteLine(cards[1].type + " " + cards[1].value);
@@ -138,6 +160,7 @@ void blackjackEnd() {
     }
     else if (cardsValue > dealerValue && cardsValue < 22 || dealerValue > 21) {
         Console.WriteLine("You won");
+        player.chips += betChoice * 2;
     }
     else if (cardsValue < dealerValue && cardsValue > 21 || dealerValue < 22) {
         Console.WriteLine("Dealer won");
