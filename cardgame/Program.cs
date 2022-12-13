@@ -18,16 +18,18 @@ void start() {
     Console.WriteLine("Please input name");
     string nameChoice = Console.ReadLine();
     if (player.name == nameChoice) {
-        Console.WriteLine("Character already exists\nWould you like to overwrite it?");
-        if (Console.ReadLine().ToLower() != "yes") {
+        Console.WriteLine("Character already exists\nPlease enter password to login.");
+        if (Console.ReadLine() != player.password) {
             start();
         }
         else {
-            player.chips = 5000;
             intro();
         }
     }
     else {
+        Console.WriteLine("Please type a password (can be empty)");
+        string pass = Console.ReadLine();
+        player.password = pass;
         player.name = nameChoice;
         player.chips = 5000;
     }
@@ -59,18 +61,12 @@ void dealingBlackjack() {
     Console.WriteLine($"Welcome to Blackjack!\nYou have {player.chips} chips\n");
     Console.WriteLine("Please place your bets");
     bool parse = int.TryParse(Console.ReadLine(), out betChoice);
-    if (!parse) {
+    if (!parse || betChoice == 0 || betChoice > player.chips) {
         betFail = true;
         dealingBlackjack();
     }
     else {
-        if (betChoice == 0 || betChoice >= player.chips) {
-            betFail = true;
-            dealingBlackjack();
-        }
-        else {
-            player.chips-=betChoice;
-        }
+        player.chips-=betChoice;
     }
     Console.WriteLine("Generating cards...\nYour cards are:");
     Console.WriteLine(cards[0].type + " " + cards[0].value);
@@ -164,9 +160,6 @@ void blackjackEnd() {
     }
     else if (cardsValue < dealerValue && cardsValue > 21 || dealerValue < 22) {
         Console.WriteLine("Dealer won");
-    }
-    else {
-        Console.WriteLine("Error");
     }
     Console.WriteLine("Type 'print' to check the value of all cards");
     string action = Console.ReadLine().ToLower();
