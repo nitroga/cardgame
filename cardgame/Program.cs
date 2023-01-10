@@ -7,7 +7,6 @@ bool betFail = false;
 string fileName = "Players.json";
 List<Card> cards = new List<Card>() {new Card(), new Card()};
 List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
-List<int> bets = new List<int>() {100, 1000};
 Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText(fileName));
 
 start();
@@ -19,23 +18,21 @@ void start() {
     string nameChoice = Console.ReadLine();
     if (player.name == nameChoice) {
         Console.WriteLine("Character already exists\nPlease enter password to login.");
-        if (Console.ReadLine() != player.password) {
-            start();
+        if (Console.ReadLine() == player.password) {
+            intro();
         }
         else {
-            intro();
+            start();
         }
     }
     else {
         Console.WriteLine("Please type a password (can be empty)");
-        string pass = Console.ReadLine();
-        player.password = pass;
+        player.password = Console.ReadLine();
         player.name = nameChoice;
         player.chips = 5000;
+        intro();
     }
-    string playerString = JsonSerializer.Serialize<Player>(player);
-    File.WriteAllText(fileName, playerString);
-    intro();
+    File.WriteAllText(fileName, JsonSerializer.Serialize<Player>(player));
 }
 
 void intro() {
@@ -43,12 +40,11 @@ void intro() {
     Console.WriteLine("What cardgame would you like to play?");
     Console.WriteLine("Current choices\n<------|------>\nBlackjack\n\nPlease choose what you would like to play:");
     string choice = Console.ReadLine().ToLower();
-    if (choice == "blackjack") {
-        dealingBlackjack();
+    if (choice != "blackjack") {
+        intro();
     }
     else {
-        Console.WriteLine("That is not a valid choice");
-        intro();
+        dealingBlackjack();
     }
 }
 
@@ -161,17 +157,5 @@ void blackjackEnd() {
     else if (cardsValue < dealerValue && cardsValue > 21 || dealerValue < 22) {
         Console.WriteLine("Dealer won");
     }
-    Console.WriteLine("Type 'print' to check the value of all cards");
-    string action = Console.ReadLine().ToLower();
-    if (action == "print") {
-        for (int i = 0; i < cards.Count; i++)
-        {
-            Console.WriteLine(cards[i].value);
-        }
-        for (int i = 0; i < dealerCards.Count; i++)
-        {
-            Console.WriteLine(dealerCards[i].value);
-        }
-    }
-}
+}   
 Console.ReadLine();
