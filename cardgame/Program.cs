@@ -5,8 +5,8 @@ int dealerValue = 0;
 int betChoice = 1;
 bool betFail = false;
 string fileName = "Players.json";
-List<Card> cards = new List<Card>() {new Card(), new Card()};
-List<Card> dealerCards = new List<Card>() {new Card(), new Card()};
+List<Card> cards = new List<Card>();
+List<Card> dealerCards = new List<Card>();
 Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText(fileName));
 
 start();
@@ -65,6 +65,13 @@ void dealingBlackjack() {
         player.chips-=betChoice;
     }
     Console.WriteLine("Generating cards...\nYour cards are:");
+    cards.Clear();
+    dealerCards.Clear();
+    for (int i = 0; i < 2; i++)
+    {
+        cards.Add(new Card());
+        dealerCards.Add(new Card());
+    }
     Console.WriteLine(cards[0].type + " " + cards[0].value);
     Console.WriteLine(cards[1].type + " " + cards[1].value);
     Console.WriteLine("\nThe dealer cards are:");
@@ -97,6 +104,7 @@ void blackjack() {
         blackjack();
     }
     else {
+        Console.Clear();
         Console.WriteLine($"You currently have {cardsValue}");
         Console.WriteLine($"The dealer has {dealerCards[0].value}");
         Console.WriteLine("\nWhat would you like to do?\nHit\nStand");
@@ -149,6 +157,7 @@ void blackjackEnd() {
     Console.WriteLine($"The dealer has: {dealerValue}\n");
     if (cardsValue > 21 && dealerValue > 21 || cardsValue == dealerValue) {
         Console.WriteLine("Noone won");
+        player.chips += betChoice;
     }
     else if (cardsValue > dealerValue && cardsValue < 22 || dealerValue > 21) {
         Console.WriteLine("You won");
@@ -157,5 +166,15 @@ void blackjackEnd() {
     else if (cardsValue < dealerValue && cardsValue > 21 || dealerValue < 22) {
         Console.WriteLine("Dealer won");
     }
+    Console.WriteLine("\nWhat would you like to do?");
+    Console.WriteLine("(1) Play again");
+    Console.WriteLine("(2) Play another game");
+    Console.WriteLine("Press enter to quit");
+    string choice = Console.ReadLine();
+    if (choice == "1") {
+        dealingBlackjack();
+    }
+    else if (choice == "2") {
+        intro();
+    }
 }   
-Console.ReadLine();
