@@ -2,7 +2,7 @@ public class Blackjack
 {
 int cardsValue = 0;
 int dealerValue = 0;
-int betChoice = 1;
+int betChoice;
 bool betFail = false;
 List<Card> cards = new List<Card>();
 List<Card> dealerCards = new List<Card>();

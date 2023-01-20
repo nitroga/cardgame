@@ -1,9 +1,6 @@
 ﻿global using System.Text.Json;
 
-string fileName = "Players.json";
-List<Card> cards = new List<Card>();
-List<Card> dealerCards = new List<Card>();
-Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText(fileName));
+Player player = JsonSerializer.Deserialize<Player>(File.ReadAllText("Players.json"));
 
 start();
 
@@ -15,7 +12,7 @@ void start() {
     if (player.name == nameChoice) {
         Console.WriteLine("Character already exists\nPlease enter password to login.");
         if (Console.ReadLine() == player.password) {
-            File.WriteAllText(fileName, JsonSerializer.Serialize<Player>(player));
+            File.WriteAllText("Players.json", JsonSerializer.Serialize<Player>(player));
             Blackjack b = new Blackjack();
             b.intro();
         }
@@ -28,7 +25,7 @@ void start() {
         player.password = Console.ReadLine();
         player.name = nameChoice;
         player.chips = 5000;
-        File.WriteAllText(fileName, JsonSerializer.Serialize<Player>(player));
+        File.WriteAllText("Players.json", JsonSerializer.Serialize<Player>(player));
         Blackjack b = new Blackjack();
         b.intro();
     }
