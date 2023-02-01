@@ -30,7 +30,7 @@ void dealingBlackjack() {
     Console.WriteLine($"Welcome to Blackjack!\nYou have {player.chips} chips\n");
     Console.WriteLine("Please place your bets");
     bool parse = int.TryParse(Console.ReadLine(), out betChoice);
-    if (!parse || betChoice == 0 || betChoice > player.chips) {
+    if (!parse || betChoice <= 0 || betChoice > player.chips - 1) {
         betFail = true;
         dealingBlackjack();
     }
@@ -49,7 +49,7 @@ void dealingBlackjack() {
     Console.WriteLine(cards[1].type + " " + cards[1].value);
     Console.WriteLine("\nThe dealer cards are:");
     Console.WriteLine(dealerCards[0].type + " " + dealerCards[0].value);
-    Console.WriteLine("Hidden  Hidden");
+    Console.WriteLine("Card is hidden");
     blackjack();
 }
 
